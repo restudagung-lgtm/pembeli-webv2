@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lapak Alun-Alun — Pesan dari Meja</title>
+<link rel="stylesheet" href="shared/style.css">
+</head>
+<body>
+<div id="app"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-storage-compat.js"></script>
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+
+<!--
+  Halaman ini: input / scan nomor meja (halaman utama situs pembeli).
+  Urutan file PENTING (bergantung satu sama lain):
+  1. shared/firebase-config.js -> koneksi ke Firestore
+  2. shared/storage.js          -> sGet/sSet/sList/sDel/sUploadImage
+  3. shared/utils.js            -> fungsi bantu umum & ikon
+  4. shared/site-config.js      -> alamat web PENJUAL
+  5. shared/paths.js            -> alamat antar-halaman situs pembeli ini
+  6. meja.js                    -> tampilan & aksi halaman ini (HARUS terakhir)
+-->
+<script src="shared/firebase-config.js"></script>
+<script src="shared/storage.js"></script>
+<script src="shared/utils.js"></script>
+<script src="shared/site-config.js"></script>
+<script src="shared/paths.js"></script>
+<script src="meja.js"></script>
+</body>
+</html>
