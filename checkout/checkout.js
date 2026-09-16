@@ -104,7 +104,7 @@ async function confirmPay(){
   if(btn){ btn.textContent = 'Memproses…'; btn.disabled = true; }
   await sSet('order:' + orderId, order, true);
   clearCart(STORE_ID);
-  rememberOrder(orderId);
+  rememberOrder(orderId, order.createdAt);
   goTo('/pesanan/', {orderId});
 }
 

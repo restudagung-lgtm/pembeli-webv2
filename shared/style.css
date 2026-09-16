@@ -372,3 +372,24 @@ a{color:var(--lantern);}
 .order-list-card .ol-info h3{font-size:14px;margin-bottom:2px;}
 .badge-dibatalkan{background:rgba(239,90,76,.14);color:var(--chili);}
 
+/* ---------- premium / langganan ---------- */
+.premium-badge{
+  display:inline-flex;align-items:center;gap:4px;font-size:10.5px;font-weight:800;
+  color:#231607;background:linear-gradient(135deg, var(--accent), var(--lantern));
+  padding:2px 8px 2px 6px;border-radius:999px;letter-spacing:.2px;
+}
+.plan-card{border-radius:var(--radius);padding:16px;margin-bottom:12px;border:1px solid var(--line);}
+.plan-card.is-free{background:var(--ink-2);}
+.plan-card.is-premium{background:linear-gradient(135deg, rgba(255,159,28,.14), rgba(255,184,77,.06));border-color:rgba(255,184,77,.35);}
+.plan-compare{display:flex;gap:10px;margin-top:10px;}
+.plan-compare .pc-col{flex:1;background:var(--ink-3);border-radius:12px;padding:12px;}
+.plan-compare .pc-col h4{font-size:12.5px;margin-bottom:6px;color:var(--text-dim);}
+.plan-compare .pc-col ul{margin:0;padding-left:16px;font-size:12px;color:var(--text-dim);line-height:1.7;}
+.plan-compare .pc-col.pc-premium{background:rgba(255,159,28,.08);border:1px solid rgba(255,184,77,.3);}
+.plan-compare .pc-col.pc-premium ul{color:var(--text);}
+.limit-banner{
+  background:rgba(239,90,76,.1);border:1px solid rgba(239,90,76,.3);border-radius:var(--radius-sm);
+  padding:14px;text-align:center;margin-top:6px;
+}
+.limit-banner p{color:var(--text-dim);font-size:12.5px;margin:6px 0 0;}
+

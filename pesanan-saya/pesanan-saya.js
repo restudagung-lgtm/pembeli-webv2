@@ -21,9 +21,15 @@ async function init(){
     mountIcons();
     return;
   }
-  const orders = (await Promise.all(ids.map(id => sGet('order:' + id, true)))).filter(Boolean);
+  const orders = (await Promise.all(ids.map(id => sGet('order:' + id, true))));
+  // Kalau dokumennya sudah tidak ada (mungkin sudah lewat 30 hari dan
+  // terhapus otomatis di server), buang juga dari riwayat lokal.
+  orders.forEach((o, i) => { if(!o) dropFromOrderHistory(ids[i]); });
+  const validOrders = orders.filter(Boolean);
   const iconByStatus = {pending:'clock', diproses:'utensils', diantar:'truck', selesai:'check-circle-2', dibatalkan:'x-circle'};
-  document.getElementById('ordersListContent').innerHTML = orders.map(o => `
+  document.getElementById('ordersListContent').innerHTML =
+    `<p class="faint" style="text-align:center;margin-bottom:10px;">${ic('clock',11)} Nota pesanan tersimpan 30 hari, lalu terhapus otomatis.</p>` +
+    validOrders.map(o => `
     <div class="order-list-card" onclick="goTo('/pesanan/',{orderId:'${o.id}'})">
       <div class="ol-ic">${ic(iconByStatus[o.status] || 'clock', 20)}</div>
       <div class="ol-info">

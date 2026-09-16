@@ -94,36 +94,37 @@ async function sList(prefix, shared){
   -------------------------
   Unggah satu file/blob gambar ke Firebase Storage di lokasi "path"
   (contoh: 'stores/abc123/photo.jpg'), lalu kembalikan URL publik untuk
-  disimpan di data toko/menu. Kembalikan null kalau gagal (misalnya Storage
-  belum diaktifkan di project Firebase kamu).
+  disimpan di data toko/menu.
+
+  PENTING: fungsi ini SENGAJA tidak menelan error-nya sendiri (tidak ada
+  try/catch di sini) -- errornya dilempar apa adanya ke pemanggil supaya
+  pesan aslinya bisa ditampilkan ke pengguna. Penyebab paling umum upload
+  gagal adalah Storage Security Rules default Firebase yang mewajibkan
+  login (request.auth != null), padahal aplikasi ini tidak memakai Firebase
+  Authentication. Lihat komentar di firebase-config.js untuk aturan yang
+  perlu dipasang di Firebase Console -> Storage -> Rules.
 */
 async function sUploadImage(path, blob){
-  try{
-    if(typeof firebase.storage !== 'function'){
-      console.error('Firebase Storage belum dimuat. Cek index.html.');
-      return null;
-    }
-    const ref = firebase.storage().ref().child(path);
-    await ref.put(blob, { contentType: blob.type || 'image/jpeg' });
-    const url = await ref.getDownloadURL();
-    return url;
-  }catch(e){
-    console.error('sUploadImage error:', path, e);
-    return null;
+  if(typeof firebase.storage !== 'function'){
+    throw new Error('Firebase Storage belum dimuat -- cek apakah script firebase-storage-compat.js ada di index.html halaman ini.');
   }
+  const ref = firebase.storage().ref().child(path);
+  await ref.put(blob, { contentType: blob.type || 'image/jpeg' });
+  return await ref.getDownloadURL();
 }
 
 /*
   sDeleteImage(path)
   -------------------
   Hapus file gambar lama di Storage (dipanggil saat foto diganti/dihapus).
-  Aman dipanggil walau file sudah tidak ada -- error akan diabaikan.
+  Di sini boleh diam-diam gagal (misalnya file memang sudah tidak ada) --
+  kegagalan hapus foto lama bukan hal fatal buat pengguna.
 */
 async function sDeleteImage(path){
   try{
     if(typeof firebase.storage !== 'function' || !path) return;
     await firebase.storage().ref().child(path).delete();
   }catch(e){
-    // biarkan diam-diam gagal (misalnya file memang sudah tidak ada)
+    console.warn('sDeleteImage gagal (diabaikan):', path, e);
   }
 }

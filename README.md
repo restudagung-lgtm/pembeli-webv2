@@ -57,7 +57,7 @@ lewat **GitHub Pages project site** (`https://username.github.io/nama-repo/`).
 Buka `shared/paths.js`, ada baris:
 
 ```js
-const BASE_PATH = '/pembeli-webv2';
+const BASE_PATH = '/pembeli-web';
 ```
 
 - Kalau nama repo GitHub kamu **persis** `pembeli-web`, biarkan seperti itu.
@@ -77,6 +77,21 @@ const BASE_PATH = '/pembeli-webv2';
 4. **Deploy**: push folder ini ke sebuah repo GitHub, aktifkan GitHub Pages
    (Settings → Pages → source: branch `main`, folder `/root`), lalu cek
    `BASE_PATH` di atas sudah cocok dengan nama repo-nya.
+
+## Retensi nota pesanan (30 hari)
+
+Nota pesanan (baik yang tersimpan di Firestore maupun riwayat lokal di
+"Pesanan Saya") otomatis dianggap kedaluwarsa setelah 30 hari — lihat
+`shared/cleanup.js` untuk detail cara kerja & keterbatasannya (dipicu saat
+halaman pesanan penjual/admin dibuka, bukan proses latar belakang 24 jam).
+
+## Kalau upload foto gagal (di web penjual)
+
+Web pembeli ini tidak mengunggah foto sendiri, tapi kalau foto toko/menu/
+QRIS yang diunggah lewat web **penjual** tidak muncul, itu biasanya karena
+Firebase Storage Rules — lihat komentar troubleshooting lengkap di
+`shared/firebase-config.js` (berlaku sama karena semua situs memakai
+project Firebase yang sama).
 
 ## Alur data (ringkas)
 

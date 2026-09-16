@@ -75,7 +75,7 @@ function drawStoreList(stores){
       <div class="store-thumb" style="${thumb}">${s.photoURL ? '' : ic(catMeta(s.category).icon, 24)}</div>
       <div class="store-info">
         <div class="row" style="align-items:flex-start;">
-          <h3>${escapeHtml(s.name)}</h3>
+          <h3>${escapeHtml(s.name)} ${premiumBadge(s)}</h3>
           ${isNearest ? '<span class="badge badge-diproses">Terdekat</span>' : ''}
         </div>
         <div style="margin:2px 0 4px;">${ratingBadge(s)}</div>

@@ -318,14 +318,34 @@ function lsGetJSON(key, fallback){
 function lsSetJSON(key, val){
   try{ localStorage.setItem(key, JSON.stringify(val)); }catch(e){}
 }
-function rememberOrder(orderId){
-  const list = lsGetJSON('lapak_order_history', []);
-  if(!list.includes(orderId)) list.unshift(orderId);
-  lsSetJSON('lapak_order_history', list.slice(0, 30));
+/*
+  rememberOrder(orderId, createdAt)
+  ------------------------------------
+  Simpan id pesanan (+ waktu dibuat) ke riwayat lokal perangkat ini, supaya
+  tab "Pesanan Saya" bisa menampilkannya lagi nanti. Riwayat lokal ini ikut
+  mengikuti kebijakan retensi 30 hari -- entri yang sudah lewat 30 hari
+  dibuang duluan dari daftar tanpa perlu tanya ke Firestore (dokumennya pun
+  kemungkinan sudah dihapus otomatis di sisi server, lihat shared/cleanup.js).
+*/
+function rememberOrder(orderId, createdAt){
+  const list = pruneOrderHistory(lsGetJSON('lapak_order_history', []));
+  const filtered = list.filter(x => x.id !== orderId);
+  filtered.unshift({ id: orderId, createdAt: createdAt || Date.now() });
+  lsSetJSON('lapak_order_history', filtered.slice(0, 30));
   localStorage.setItem('lapak_active_order', orderId);
 }
+function pruneOrderHistory(list){
+  const cutoff = Date.now() - 30*24*60*60*1000;
+  return (list || []).filter(x => x && x.createdAt && x.createdAt >= cutoff);
+}
 function getOrderHistory(){
-  return lsGetJSON('lapak_order_history', []);
+  const pruned = pruneOrderHistory(lsGetJSON('lapak_order_history', []));
+  lsSetJSON('lapak_order_history', pruned); // simpan balik versi yang sudah dibersihkan
+  return pruned.map(x => x.id);
+}
+function dropFromOrderHistory(orderId){
+  const list = lsGetJSON('lapak_order_history', []);
+  lsSetJSON('lapak_order_history', list.filter(x => x.id !== orderId));
 }
 function clearActiveOrder(){
   localStorage.removeItem('lapak_active_order');

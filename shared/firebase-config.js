@@ -12,6 +12,40 @@
   Untuk fitur unggah foto (foto toko, foto menu, QRIS), aktifkan juga Firebase Storage:
   menu kiri "Build" -> "Storage" -> "Get started" -> mulai di "test mode".
 
+  ==========================================================================
+  KALAU UPLOAD FOTO GAGAL / TIDAK MUNCUL (error di console: "storage/unauthorized"
+  atau "Firebase Storage: User does not have permission"):
+  ==========================================================================
+  Ini HAMPIR SELALU karena Storage Security Rules default Firebase mewajibkan
+  login (request.auth != null) -- padahal aplikasi Lapak Alun-Alun ini TIDAK
+  memakai Firebase Authentication sama sekali (login penjual/admin cuma
+  dicek manual lewat data di Firestore, bukan lewat sistem auth Firebase).
+  Akibatnya semua upload otomatis ditolak oleh Storage.
+
+  Perbaikannya:
+  1. Buka https://console.firebase.google.com -> pilih project ini.
+  2. Menu kiri "Build" -> "Storage" -> tab "Rules" di bagian atas.
+  3. Ganti isinya jadi:
+
+       rules_version = '2';
+       service firebase.storage {
+         match /b/{bucket}/o {
+           match /{allPaths=**} {
+             allow read, write: if true;
+           }
+         }
+       }
+
+  4. Klik "Publish".
+
+  CATATAN: aturan "if true" ini artinya siapa pun yang tahu alamat project
+  Firebase kamu bisa upload/hapus file di Storage -- sama seperti Firestore
+  "test mode" yang juga terbuka. Ini level wajar untuk prototipe/skala
+  warung kecil (karena aplikasi ini memang tidak punya sistem login
+  Firebase Auth sungguhan), tapi kalau suatu saat mau lebih aman, perlu
+  ditambah Firebase Authentication + Rules yang mengecek identitas
+  penggunanya, bukan cuma "if true".
+
   Lihat README.md untuk panduan lengkap langkah demi langkah + aturan keamanan Firestore/Storage.
 */
 const firebaseConfig = {

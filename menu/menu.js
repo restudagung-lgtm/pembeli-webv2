@@ -28,7 +28,7 @@ async function init(){
 
   const app = document.getElementById('app');
   app.innerHTML = `
-  <div class="topbar"><button class="backbtn" onclick="goTo('/toko/',{table:'${TABLE}'})">${ic('arrow-left',18)}</button><div><h2>${escapeHtml(STORE_NAME)}</h2><div class="sub">${ratingBadge(store)} · ${ic('map-pin',12)} Meja ${TABLE}</div></div></div>
+  <div class="topbar"><button class="backbtn" onclick="goTo('/toko/',{table:'${TABLE}'})">${ic('arrow-left',18)}</button><div><h2>${escapeHtml(STORE_NAME)} ${premiumBadge(store)}</h2><div class="sub">${ratingBadge(store)} · ${ic('map-pin',12)} Meja ${TABLE}</div></div></div>
   <div class="content">
     <div class="search-box">${ic('search',16)}<input id="menuSearch" placeholder="Cari menu..." oninput="filterMenu()"></div>
     <div class="chip-row" id="menuChips"></div>
