@@ -21,7 +21,7 @@
 // Nilai di bawah ini SUDAH disesuaikan dengan alamat GitHub Pages yang
 // tertulis di shared/site-config.js (.../pembeli-web/). Kalau nama repo
 // GitHub kamu berbeda, atau kamu pindah ke domain custom, ganti nilai ini.
-const BASE_PATH = '/pembeli-webv2';
+const BASE_PATH = '/pembeli-web';
 
 /*
   pageUrl('/menu/', {storeId:'abc', table:'5'})

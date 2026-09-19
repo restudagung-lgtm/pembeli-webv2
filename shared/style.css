@@ -1,33 +1,33 @@
 :root{
-  /* ---------- Modern Night Market palette ---------- */
-  --ink:#121820;
-  --ink-2:#1B2430;
-  --ink-3:#232E3B;
-  --ink-4:#2B3644;
+  /* ---------- Alun-Alun Siang (light) palette ---------- */
+  --ink:#F7F3EC;
+  --ink-2:#FFFFFF;
+  --ink-3:#F1EBDD;
+  --ink-4:#E8DFC9;
   --paper:#FBF1DE;
   --paper-2:#F4E8CF;
-  --lantern:#FF9F1C;
-  --lantern-dark:#D6820E;
+  --lantern:#C1650A;
+  --lantern-dark:#96500A;
   --accent:#FFB84D;
-  --chili:#EF5A4C;
-  --leaf:#3DDC97;
-  --text:#F8F5F0;
-  --text-dim:#AAB4C2;
-  --text-faint:#7C8797;
-  --line: rgba(248,245,240,0.09);
-  --line-strong: rgba(248,245,240,0.16);
+  --chili:#D8432F;
+  --leaf:#1F9D6C;
+  --text:#241A10;
+  --text-dim:#79695A;
+  --text-faint:#A99A87;
+  --line: rgba(36,26,16,0.09);
+  --line-strong: rgba(36,26,16,0.17);
   --radius:18px;
   --radius-sm:12px;
   --radius-lg:22px;
-  --shadow-float: 0 10px 30px rgba(0,0,0,0.35);
+  --shadow-float: 0 10px 26px rgba(36,26,16,0.16);
 }
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
 html,body{margin:0;padding:0;}
 body{
   background: var(--ink);
   background-image:
-    radial-gradient(700px 380px at 15% -8%, rgba(255,159,28,0.10), transparent 60%),
-    radial-gradient(600px 320px at 100% 0%, rgba(61,220,151,0.06), transparent 55%);
+    radial-gradient(700px 380px at 15% -8%, rgba(193,101,10,0.07), transparent 60%),
+    radial-gradient(600px 320px at 100% 0%, rgba(31,157,108,0.05), transparent 55%);
   background-attachment: fixed;
   color:var(--text);
   font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
@@ -47,7 +47,7 @@ a{color:var(--lantern);}
 .topbar{
   position:sticky;top:0;z-index:20;
   display:flex;align-items:center;gap:10px;
-  padding:16px 18px;background:rgba(18,24,32,0.86);backdrop-filter:blur(10px);
+  padding:16px 18px;background:rgba(247,243,236,0.86);backdrop-filter:blur(10px);
   border-bottom:1px solid var(--line);
 }
 .topbar h2{font-size:18px;}
@@ -129,9 +129,9 @@ a{color:var(--lantern);}
 .badge-pending{background:rgba(255,159,28,.16);color:var(--lantern);}
 .badge-diproses{background:rgba(61,220,151,.16);color:var(--leaf);}
 .badge-diantar{background:rgba(239,90,76,.16);color:var(--chili);}
-.badge-selesai{background:rgba(255,255,255,.1);color:var(--text-dim);}
+.badge-selesai{background:rgba(36,26,16,.08);color:var(--text-dim);}
 .badge-lunas{background:rgba(61,220,151,.16);color:var(--leaf);}
-.badge-bayar_ditempat{background:rgba(255,184,77,.16);color:var(--accent);}
+.badge-bayar_ditempat{background:rgba(255,184,77,.22);color:var(--lantern);}
 
 /* ---------- search box ---------- */
 .search-box{
@@ -209,7 +209,7 @@ a{color:var(--lantern);}
 /* ---------- floating cart bar ---------- */
 .cartbar{
   position:fixed;bottom:14px;left:50%;transform:translateX(-50%);width:calc(100% - 28px);max-width:452px;
-  background:linear-gradient(180deg, var(--ink-4), var(--ink-3));border:1px solid var(--line-strong);
+  background:var(--ink-2);border:1px solid var(--line-strong);
   border-radius:18px;padding:12px 12px 12px 18px;
   display:flex;align-items:center;justify-content:space-between;gap:12px;z-index:30;
   box-shadow:var(--shadow-float);
@@ -222,7 +222,7 @@ a{color:var(--lantern);}
 
 /* ---------- tabbar ---------- */
 .tabbar{
-  position:sticky;bottom:0;display:flex;background:rgba(18,24,32,0.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:25;
+  position:sticky;bottom:0;display:flex;background:rgba(247,243,236,0.92);backdrop-filter:blur(10px);border-top:1px solid var(--line);z-index:25;
 }
 .tabbar button{
   flex:1;background:none;border:none;color:var(--text-faint);padding:13px 4px;font-size:11.5px;cursor:pointer;
@@ -265,7 +265,7 @@ a{color:var(--lantern);}
 .toggle{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--text-dim);}
 .switch{width:38px;height:22px;border-radius:999px;background:var(--ink-3);position:relative;cursor:pointer;border:1px solid var(--line-strong);flex:none;}
 .switch.on{background:var(--leaf);}
-.switch .knob{width:16px;height:16px;border-radius:50%;background:var(--text);position:absolute;top:2px;left:2px;transition:.15s;}
+.switch .knob{width:16px;height:16px;border-radius:50%;background:#fff;position:absolute;top:2px;left:2px;transition:.15s;box-shadow:0 1px 3px rgba(36,26,16,.3);}
 .switch.on .knob{left:19px;}
 
 /* ---------- payment method cards ---------- */
@@ -283,7 +283,7 @@ a{color:var(--lantern);}
 .paymethod.selected .pm-check{border-color:var(--lantern);background:var(--lantern);color:#231607;}
 .paymethod.disabled{opacity:.45;cursor:not-allowed;}
 
-.qris-box{background:#fff;border-radius:var(--radius);padding:18px;text-align:center;margin-bottom:12px;}
+.qris-box{background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px;text-align:center;margin-bottom:12px;}
 .qris-box img{width:100%;max-width:220px;border-radius:10px;}
 .qris-box .qris-amount{color:#231607;font-weight:800;font-size:20px;margin-top:12px;}
 .qris-box .qris-store{color:#5b4a2f;font-size:12.5px;margin-top:2px;}
@@ -304,7 +304,7 @@ a{color:var(--lantern);}
 
 /* ---------- QR grid & print ---------- */
 .qr-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px;}
-.qr-card{background:#fff;border-radius:var(--radius-sm);padding:12px;text-align:center;}
+.qr-card{background:#fff;border:1px solid var(--line);border-radius:var(--radius-sm);padding:12px;text-align:center;}
 .qr-card img{width:100%;max-width:120px;border-radius:6px;}
 .qr-card .qr-label{color:#231607;font-weight:700;font-size:12.5px;margin-top:6px;}
 .qr-card .qr-dl{display:inline-block;margin-top:6px;font-size:11px;color:var(--lantern-dark);font-weight:700;cursor:pointer;background:none;border:none;text-decoration:underline;}
@@ -333,8 +333,8 @@ a{color:var(--lantern);}
 .rate-picker button{background:none;border:none;cursor:pointer;color:var(--text-faint);padding:4px;}
 .rate-picker button.active{color:var(--lantern);}
 
-/* ---------- bottom nav (pembeli: 2 tab) ---------- */
-.tabbar-2 button{flex:1;}
+/* ---------- bottom nav (pembeli: lebar merata berapa pun jumlah tab) ---------- */
+.tabbar-eq button{flex:1;}
 
 /* ---------- order status hero (gabungan struk + lacak) ---------- */
 .status-hero{
@@ -346,7 +346,7 @@ a{color:var(--lantern);}
 }
 .status-hero .status-ic.st-pending{background:rgba(255,159,28,.16);color:var(--lantern);}
 .status-hero .status-ic.st-diproses{background:rgba(61,220,151,.16);color:var(--leaf);}
-.status-hero .status-ic.st-diantar{background:rgba(255,184,77,.18);color:var(--accent);}
+.status-hero .status-ic.st-diantar{background:rgba(255,184,77,.22);color:var(--lantern);}
 .status-hero .status-ic.st-selesai{background:rgba(61,220,151,.2);color:var(--leaf);}
 .status-hero .status-ic.st-dibatalkan{background:rgba(239,90,76,.16);color:var(--chili);}
 .status-hero h2{font-size:19px;}
@@ -425,4 +425,39 @@ a{color:var(--lantern);}
 .profile-link-card .plc-info{flex:1;min-width:0;}
 .profile-link-card .plc-info h3{font-size:14.5px;margin-bottom:1px;}
 .profile-link-card .plc-arrow{color:var(--text-faint);flex:none;}
+
+/* ---------- ikon keranjang di topbar ---------- */
+.topbar-cart-btn{position:relative;background:none;border:none;color:var(--text);cursor:pointer;padding:6px;flex:none;}
+.cart-badge{
+  position:absolute;top:0px;right:0px;background:var(--chili);color:#fff;font-size:10px;font-weight:800;
+  min-width:16px;height:16px;border-radius:999px;display:flex;align-items:center;justify-content:center;padding:0 3px;
+  border:1.5px solid var(--ink-2);
+}
+
+/* ---------- favorit ---------- */
+.fav-btn{position:relative;background:rgba(255,255,255,.85);border:none;color:var(--chili);width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 2px 8px rgba(36,26,16,.15);}
+.fav-btn.active{color:var(--chili);}
+.fav-btn:not(.active){color:var(--text-faint);}
+
+/* ---------- stok / habis ---------- */
+.stock-out{opacity:.55;}
+.badge-habis{background:rgba(216,67,47,.14);color:var(--chili);}
+.stock-low{color:var(--chili);font-weight:700;}
+
+/* ---------- jam operasional ---------- */
+.hours-badge{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;font-weight:700;}
+.hours-badge.is-open{color:var(--leaf);}
+.hours-badge.is-closed{color:var(--chili);}
+.closed-banner{background:rgba(216,67,47,.1);border:1px solid rgba(216,67,47,.3);border-radius:var(--radius-sm);padding:12px 14px;text-align:center;margin-bottom:12px;color:var(--chili);font-weight:700;font-size:13px;}
+
+/* ---------- promo ---------- */
+.promo-box{display:flex;gap:8px;margin-bottom:8px;}
+.promo-box input{flex:1;}
+.promo-applied{display:flex;align-items:center;justify-content:space-between;background:rgba(31,157,108,.1);border:1px solid rgba(31,157,108,.3);border-radius:var(--radius-sm);padding:10px 14px;margin-bottom:8px;color:var(--leaf);font-weight:700;font-size:13px;}
+
+/* ---------- review/ulasan ---------- */
+.review-item{border-bottom:1px solid var(--line);padding:10px 0;}
+.review-item:last-child{border-bottom:none;}
+.review-item .review-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.review-item .review-comment{font-size:13px;color:var(--text-dim);margin:0;}
 

@@ -53,6 +53,23 @@ function circularDist(a, b, total){
   return Math.min(diff, total - diff);
 }
 
+/*
+  storeStatusLabel(store)
+  --------------------------
+  Status buka/tutup toko. Saklar manual penjual (store.isOpen) yang
+  MENENTUKAN apakah pembeli boleh memesan -- jam buka/tutup (openTime/
+  closeTime) cuma teks informasi untuk pembeli, bukan yang menghitung
+  otomatis dari jam perangkat (supaya tidak meleset karena zona waktu/jam
+  HP yang beda-beda).
+*/
+function storeStatusLabel(store){
+  if(!store) return { open:true, text:'' };
+  const open = store.isOpen !== false; // default terbuka kalau penjual belum pernah mengatur
+  if(!open) return { open:false, text:'Tutup' };
+  if(store.openTime && store.closeTime) return { open:true, text:`Buka ${store.openTime}\u2013${store.closeTime}` };
+  return { open:true, text:'Buka' };
+}
+
 function togglePwd(id, btn){
   const input = document.getElementById(id);
   if(!input) return;

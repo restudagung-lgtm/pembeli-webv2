@@ -103,3 +103,14 @@ project Firebase yang sama).
   transaksi akan otomatis disisipkan ke kode QR sebelum ditampilkan ke
   pembeli — jadi satu kode QRIS bisa langsung dipindai GoPay/OVO/DANA/
   ShopeePay/m-banking apa pun dengan nominal yang sudah pas.
+
+## Pembaruan tampilan & fitur terbaru
+
+- **Tema terang** (sebelumnya gelap), tetap mobile-first, warna lentera-oranye khas Lapak Alun-Alun dipertahankan.
+- **Keranjang di topbar**: ikon + badge jumlah item, muncul di halaman Toko & Menu.
+- **Favorit**: toko & menu bisa ditandai favorit (ikon hati), tab baru "Favorit" di navigasi bawah (`shared/favorites.js`, halaman `/favorit/`).
+- **Rating & ulasan per menu**: setelah pesanan selesai, pembeli kasih rating tiap menu + ulasan teks opsional (bukan cuma rating toko).
+- **Status stok**: menu otomatis tampil "Habis" & tidak bisa dipesan kalau stoknya 0 (kalau penjual mengaktifkan pelacakan stok).
+- **Jam operasional**: toko yang sedang tutup (`store.isOpen === false`) menampilkan status "Tutup" dan menu tidak bisa di-checkout.
+- **Kode promo**: bisa dimasukkan di halaman checkout kalau toko sedang punya promo aktif.
+- **Cetak struk**: tombol printer di halaman status pesanan untuk mencetak struk.

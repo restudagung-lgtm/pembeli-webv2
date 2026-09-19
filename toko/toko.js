@@ -15,15 +15,19 @@ const CATS = [
 ];
 function catMeta(id){ return CATS.find(c => c.id === id) || {label:'Lainnya', icon:'utensils'}; }
 
-let TABLE, storesCache = [], storeCat = '';
+let TABLE, storesCache = [], storeCat = '', _activeCartRef = null;
 
 async function init(){
   TABLE = ctxParam('table', 'lapak_table', true);
   if(!TABLE){ goTo('/'); return; }
 
   const app = document.getElementById('app');
+  const activeCart = findActiveCart();
+  _activeCartRef = activeCart;
   app.innerHTML = `
-  <div class="topbar"><button class="backbtn" onclick="goTo('/')">${ic('arrow-left',18)}</button><div><h2>Pilih Lapak</h2><div class="sub">${ic('map-pin',12)} Meja ${TABLE}</div></div></div>
+  <div class="topbar"><button class="backbtn" onclick="goTo('/')">${ic('arrow-left',18)}</button><div style="flex:1;"><h2>Pilih Lapak</h2><div class="sub">${ic('map-pin',12)} Meja ${TABLE}</div></div>
+    ${activeCart ? `<button class="topbar-cart-btn" onclick="goToActiveCart()">${ic('shopping-cart',22)}<span class="cart-badge">${activeCart.qty}</span></button>` : ''}
+  </div>
   <div class="content">
     <div class="search-box">${ic('search',16)}<input id="storeSearch" placeholder="Cari makanan atau lapak..." oninput="filterStores()"></div>
     <div class="chip-row" id="storeChips"></div>
@@ -41,6 +45,12 @@ async function init(){
   storesCache = stores.map(s => ({...s, _dist: circularDist(TABLE, s.nearTable, totalTables)}));
   storesCache.sort((a,b) => a._dist - b._dist);
   drawStoreList(storesCache);
+}
+
+function goToActiveCart(){
+  if(!_activeCartRef) return;
+  const match = storesCache.find(s => s.id === _activeCartRef.storeId);
+  goTo('/keranjang/', {storeId: _activeCartRef.storeId, storeName: match ? match.name : '', table: TABLE});
 }
 
 function pickStoreCat(el, cat){
@@ -70,22 +80,34 @@ function drawStoreList(stores){
     else if(s._dist === 0) distLabel = 'Tepat di sekitar mejamu';
     else distLabel = '≈ ' + s._dist + ' meja dari kamu';
     const thumb = s.photoURL ? `background-image:url('${s.photoURL}')` : '';
+    const status = storeStatusLabel(s);
+    const fav = isFavStore(s.id);
     return `
-    <div class="store-card" onclick="goTo('/menu/',{storeId:'${s.id}',storeName:'${jsAttr(s.name)}',table:'${TABLE}'})">
-      <div class="store-thumb" style="${thumb}">${s.photoURL ? '' : ic(catMeta(s.category).icon, 24)}</div>
+    <div class="store-card" style="position:relative;" onclick="goTo('/menu/',{storeId:'${s.id}',storeName:'${jsAttr(s.name)}',table:'${TABLE}'})">
+      <div class="store-thumb" style="${thumb}">
+        ${s.photoURL ? '' : ic(catMeta(s.category).icon, 24)}
+      </div>
       <div class="store-info">
         <div class="row" style="align-items:flex-start;">
           <h3>${escapeHtml(s.name)} ${premiumBadge(s)}</h3>
           ${isNearest ? '<span class="badge badge-diproses">Terdekat</span>' : ''}
         </div>
-        <div style="margin:2px 0 4px;">${ratingBadge(s)}</div>
+        <div style="margin:2px 0 4px;display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+          ${ratingBadge(s)}
+          <span class="hours-badge ${status.open ? 'is-open' : 'is-closed'}">${ic(status.open ? 'check-circle-2':'x-circle', 11)} ${status.text}</span>
+        </div>
         <p class="muted" style="margin:0 0 4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${escapeHtml(s.desc || 'Belum ada deskripsi')}</p>
         <p class="faint" style="display:flex;align-items:center;gap:4px;">${ic('map-pin',11)} ${distLabel}</p>
       </div>
-      <div class="store-arrow">${ic('chevron-right',18)}</div>
+      <button class="fav-btn ${fav?'active':''}" style="position:absolute;top:10px;right:10px;" onclick="event.stopPropagation(); toggleFavStoreUI(this,'${s.id}')">${ic('heart',15)}</button>
     </div>`;
   }).join('');
   mountIcons();
+}
+
+function toggleFavStoreUI(btn, storeId){
+  const active = toggleFavStore(storeId);
+  btn.classList.toggle('active', active);
 }
 
 init();

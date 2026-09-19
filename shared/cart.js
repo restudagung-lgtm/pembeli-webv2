@@ -24,3 +24,25 @@ function cartTotals(cart){
   const price = Object.values(cart).reduce((a,c) => a + c.qty * (c.menu ? c.menu.price : 0), 0);
   return {qty, price};
 }
+
+/*
+  findActiveCart()
+  -----------------
+  Cari keranjang toko mana pun di perangkat ini yang masih ada isinya.
+  Dipakai untuk menampilkan ikon keranjang + badge di topbar halaman
+  /toko/ (di luar konteks satu toko tertentu). Kalau ada lebih dari satu
+  keranjang aktif (jarang terjadi -- misalnya sempat isi keranjang di dua
+  toko berbeda), cukup ambil salah satu duluan.
+*/
+function findActiveCart(){
+  for(let i = 0; i < localStorage.length; i++){
+    const key = localStorage.key(i);
+    if(key && key.indexOf('lapak_cart_') === 0){
+      const storeId = key.slice('lapak_cart_'.length);
+      const cart = lsGetJSON(key, {});
+      const t = cartTotals(cart);
+      if(t.qty > 0) return { storeId, cart, qty:t.qty, price:t.price };
+    }
+  }
+  return null;
+}
